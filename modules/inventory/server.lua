@@ -3,7 +3,7 @@ assert(lib.checkDependency('qbx_vehicles', '1.2.0'), 'qbx_vehicles v1.2.0 or hig
 local Inventory = require 'modules.inventory.server'
 local QBX = exports.qbx_core
 
-AddEventHandler('qbx_core:server:playerLoggedOut', server.playerDropped)
+AddEventHandler('qbx_core:server:playerLoggedOut', server.playerDropped)  -- luacheck: ignore
 
 AddEventHandler('qbx_core:server:onGroupUpdate', function(source, groupName, groupGrade)
     local inventory = Inventory(source)
@@ -14,7 +14,7 @@ end)
 local function setupPlayer(playerData)
     playerData.identifier = playerData.citizenid
     playerData.name = ('%s %s'):format(playerData.charinfo.firstname, playerData.charinfo.lastname)
-    server.setPlayerInventory(playerData)
+    server.setPlayerInventory(playerData)  -- luacheck: ignore
 
     local accounts = Inventory.GetAccountItemCounts(playerData.source)
     if not accounts then return end
@@ -36,13 +36,13 @@ SetTimeout(500, function()
     for i = 1, #playersData do setupPlayer(playersData[i]) end
 end)
 
-function server.UseItem(source, itemName, data)
+function server.UseItem(source, itemName, data) -- luacheck: ignore
     local cb = QBX:CanUseItem(itemName)
     return cb and cb(source, data)
 end
 
 ---@diagnostic disable-next-line: duplicate-set-field
-function server.setPlayerData(player)
+function server.setPlayerData(player) -- luacheck: ignore
     local groups = QBX:GetGroups(player.source)
     return {
         source = player.source,
@@ -54,7 +54,7 @@ function server.setPlayerData(player)
 end
 
 ---@diagnostic disable-next-line: duplicate-set-field
-function server.syncInventory(inv)
+function server.syncInventory(inv) -- luacheck: ignore
     local accounts = Inventory.GetAccountItemCounts(inv)
 
     local player = QBX:GetPlayer(inv.id)
@@ -71,13 +71,13 @@ function server.syncInventory(inv)
 end
 
 ---@diagnostic disable-next-line: duplicate-set-field
-function server.hasLicense(inv, license)
+function server.hasLicense(inv, license) -- luacheck: ignore
     local player = QBX:GetPlayer(inv.id)
     return player and player.PlayerData.metadata.licences[license]
 end
 
 ---@diagnostic disable-next-line: duplicate-set-field
-function server.buyLicense(inv, license)
+function server.buyLicense(inv, license) -- luacheck: ignore
     local player = QBX:GetPlayer(inv.id)
     if not player then return end
 
@@ -95,13 +95,13 @@ function server.buyLicense(inv, license)
 end
 
 ---@diagnostic disable-next-line: duplicate-set-field
-function server.isPlayerBoss(playerId, group, grade)
+function server.isPlayerBoss(playerId, group, grade) -- luacheck: ignore
     return QBX:IsGradeBoss(group, grade)
 end
 
 ---@param entityId number
 ---@return number | string
 ---@diagnostic disable-next-line: duplicate-set-field
-function server.getOwnedVehicleId(entityId)
+function server.getOwnedVehicleId(entityId) -- luacheck: ignore
     return Entity(entityId).state.vehicleid or exports.qbx_vehicles:GetVehicleIdByPlate(GetVehicleNumberPlateText(entityId)) or GetVehicleNumberPlateText(entityId)
 end
