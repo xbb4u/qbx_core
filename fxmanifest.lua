@@ -41,6 +41,7 @@ server_scripts {
 
 files {
     'modules/*.lua',
+    'modules/inventory/client.lua',
     'shared/gangs.lua',
     'shared/items.lua',
     'shared/jobs.lua',
