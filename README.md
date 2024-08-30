@@ -8,7 +8,7 @@ qbx_core is a framework created on September 27, 2022, as a successor to qb-core
 
 Want to know more? View our [documentation](https://docs.qbox.re/). If you feel something is missing or want to suggest additional functionality that can be added to qbx_core, bring it up on the official [Qbox Discord](https://discord.gg/qbox)!
 
-> [!WARN]
+> [!WARNING]
 > We heavily advise not to modify the core outside of the config files!
 
 ## Dependencies
