@@ -612,6 +612,12 @@ function CheckPlayerData(source, playerData)
         hasRecord = false,
         date = nil
     }
+
+
+ --license
+    playerData.metadata.licenses = playerData.metadata.licenses or {}
+    playerData.metadata.licenses.business  = playerData.metadata.licenses.business or false
+
     playerData.metadata.licences = playerData.metadata.licences or {
         id = true,
         driver = true,
