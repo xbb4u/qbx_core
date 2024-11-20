@@ -109,27 +109,18 @@ local function onPlayerConnecting(name, _, deferrals)
 
     -- conduct database-dependant checks
     CreateThread(function()
-        deferrals.update(locale('info.checking_ban', name))
-        local success, err = pcall(function()
-            local isBanned, Reason = IsPlayerBanned(src --[[@as Source]])
-            if isBanned then
-                Wait(0) -- Mandatory wait
-                deferrals.done(Reason)
-            end
-        end)
-
-        if serverConfig.whitelist and success then
+        if serverConfig.whitelist then
             deferrals.update(locale('info.checking_whitelisted', name))
-            success, err = pcall(function()
+            local success, err = pcall(function()
                 if not IsWhitelisted(src --[[@as Source]]) then
                     Wait(0) -- Mandatory wait
                     deferrals.done(locale('error.not_whitelisted'))
                 end
             end)
-        end
 
-        if not success then
-            databasePromise:reject(err)
+            if not success then
+                databasePromise:reject(err)
+            end
         end
         databasePromise:resolve()
     end)
