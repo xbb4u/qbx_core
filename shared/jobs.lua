@@ -182,4 +182,29 @@ return {
 			},
 		},
 	},
+    ['highnotes'] = {
+		label = 'High Notes Dispensary',
+        type = 'dispensary',
+        societyPay = true,
+        basePay = 5000,
+		grades = {
+            [0] = {
+                name = 'Employee',
+            },
+			[1] = {
+                name = 'Shopkeeper',
+            },
+			[2] = {
+                name = 'Supervisor',
+            },
+			[3] = {
+                name = 'Manager',
+				ismanager = true,
+            },
+			[4] = {
+                name = 'Owner',
+				isboss = true,
+            },
+        },
+	},
 }

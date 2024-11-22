@@ -112,11 +112,11 @@ return {
         return exports['Renewed-Banking']:removeAccountMoney(accountName, payment)
     end,
 
-    ---Paycheck function
-    ---@param player Player Player object
-    ---@param payment number Payment amount
-    sendPaycheck = function (player, payment)
-        player.Functions.AddMoney('bank', payment)
-        Notify(player.PlayerData.source, locale('info.received_paycheck', payment))
-    end,
+    -- ---Paycheck function
+    -- ---@param player Player Player object
+    -- ---@param payment number Payment amount
+    -- sendPaycheck = function (player, payment)
+    --     player.Functions.AddMoney('bank', payment)
+    --     Notify(player.PlayerData.source, locale('info.received_paycheck', payment))
+    -- end,
 }
