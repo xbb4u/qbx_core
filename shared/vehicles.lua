@@ -6911,5 +6911,41 @@ return {
         price = 84821,
         category = 'sportsclassics',
         hash = `ztype`,
-    }
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    -- Custom Vehicles
+
+    gbesperta = {
+        name = 'Esperta',
+        brand = 'Bravado',
+        model = 'gbesperta',
+        price = 80000,
+        category = 'vans',
+        hash = `gbesperta`,
+    },
+    elegy3 = {
+        name = 'Elegy RH9 Custom',
+        brand = 'Annis',
+        model = 'elegy3',
+        price = 500000,
+        category = 'sports',
+        hash = `elegy3`,
+    },
+
 }
