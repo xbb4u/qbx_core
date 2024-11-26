@@ -207,4 +207,63 @@ return {
             },
         },
 	},
+    ['lscustoms'] = {
+		label = 'Los Santos Customs',
+        type = 'mechanic',
+        societyPay = true,
+        basePay = 5000,
+		grades = {
+            [0] = {
+                name = 'Recruit',
+            },
+			[1] = {
+                name = 'Novice',
+            },
+			[2] = {
+                name = 'Experienced',
+            },
+			[3] = {
+                name = 'Advanced',
+            },
+			[4] = {
+                name = 'Manager',
+				ismanager = true,
+            },
+            [5] = {
+                name = 'boss',
+				isboss = true,
+            },
+        },
+	},
+    ['casino'] = {
+        label = 'Diamond Casino',
+        type = 'casino',
+        societyPay = true,
+        basePay = 5000,
+        grades = {
+            [0] = {
+                name = 'Slot Machine Attendant',
+            },
+            [1] = {
+                name = 'Security',
+            },
+            [3] = {
+                name = 'Bartender',
+            },
+            [4] = {
+                name = 'Promoter',
+            },
+            [5] = {
+                name = 'Pit Boss',
+            },
+            [6] = {
+                name = 'Manager',
+                ismanager = true,
+            },
+            [7] = {
+                name = 'CEO',
+                isboss = true,
+            },
+        },
+    },
 }

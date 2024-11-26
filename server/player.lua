@@ -142,6 +142,7 @@ local function toPlayerJob(jobName, job, grade)
         name = jobName,
         label = job.label,
         isboss = job.grades[grade].isboss or false,
+        ismanager = job.grades[grade].ismanager or false,
         onduty = job.defaultDuty or false,
         payment = job.grades[grade].payment or 0,
         type = job.type,
@@ -647,6 +648,7 @@ function CheckPlayerData(source, playerData)
         type = job.type,
         onduty = playerData.job?.onduty or false,
         isboss = job.grades[jobGrade].isboss or false,
+        ismanager = job.grades[jobGrade].ismanager or false,
         grade = {
             name = job.grades[jobGrade].name,
             level = jobGrade,
@@ -915,6 +917,7 @@ function CreatePlayer(playerData, Offline)
                 name = 'unemployed',
                 label = 'Civilian',
                 isboss = false,
+                ismanager = false,
                 onduty = true,
                 payment = 10,
                 grade = {
@@ -932,12 +935,15 @@ function CreatePlayer(playerData, Offline)
                 self.PlayerData.job.grade.name = jobGrade.name
                 self.PlayerData.job.payment = jobGrade.payment or 30
                 self.PlayerData.job.isboss = jobGrade.isboss or false
+                self.PlayerData.job.ismanager = jobGrade.ismanager or false
+
             else
                 self.PlayerData.job.grade = {
                     name = 'No Grades',
                     level = 0,
                     payment = 30,
                     isboss = false,
+                    ismanager = false,
                 }
             end
         end
