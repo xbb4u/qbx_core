@@ -6947,5 +6947,13 @@ return {
         category = 'sports',
         hash = `elegy3`,
     },
+    GODzZACOEEVO = {
+        name = 'ZACOE EVO',
+        brand = 'Annis',
+        model = 'GODzZACOEEVO',
+        price = 500000,
+        category = 'sports',
+        hash = `GODzZACOEEVO`,
+    },
 
 }
