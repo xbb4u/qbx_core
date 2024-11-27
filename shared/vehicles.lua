@@ -6947,6 +6947,7 @@ return {
         category = 'sports',
         hash = `elegy3`,
     },
+<<<<<<< Updated upstream
     GODzZACOEEVO = {
         name = 'ZACOE EVO',
         brand = 'Annis',
@@ -6954,6 +6955,15 @@ return {
         price = 500000,
         category = 'sports',
         hash = `GODzZACOEEVO`,
+=======
+    Brabus_G650_Barbie = {
+        name = 'Barbie G650',
+        brand = 'Brabus',
+        model = 'Brabus_G650_Barbie',
+        price = 500000,
+        category = 'sports',
+        hash = `Brabus_G650_Barbie`,
+>>>>>>> Stashed changes
     },
 
 }
