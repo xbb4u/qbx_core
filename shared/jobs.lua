@@ -266,4 +266,29 @@ return {
             },
         },
     },
+    ['realestate'] = {
+		label = 'Real Estate',
+        type = 'realestate',
+        societyPay = true,
+        basePay = 8500,
+		grades = {
+            [0] = {
+                name = 'Security',
+            },
+			[1] = {
+                name = 'House Sales',
+            },
+			[2] = {
+                name = 'Business Sales',
+            },
+			[3] = {
+                name = 'Manager',
+                ismanager = true,
+            },
+			[4] = {
+                name = 'CEO',
+				isboss = true,
+            },
+        },
+	},
 }
