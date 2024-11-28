@@ -6947,23 +6947,128 @@ return {
         category = 'sports',
         hash = `elegy3`,
     },
-<<<<<<< Updated upstream
-    GODzZACOEEVO = {
-        name = 'ZACOE EVO',
-        brand = 'Annis',
-        model = 'GODzZACOEEVO',
+
+
+
+
+    -- Police Vehicles --
+    
+    ll1bb = {
+        name = 'Police Torrence',
+        brand = 'Vapid',
+        model = 'll1bb',
         price = 500000,
-        category = 'sports',
-        hash = `GODzZACOEEVO`,
-=======
-    Brabus_G650_Barbie = {
-        name = 'Barbie G650',
-        brand = 'Brabus',
-        model = 'Brabus_G650_Barbie',
+        category = 'NOSTORE',
+        hash = `ll1bb`,
+    },
+    ll2bb = {
+        name = 'Police Stanier',
+        brand = 'Vapid',
+        model = 'll2bb',
         price = 500000,
-        category = 'sports',
-        hash = `Brabus_G650_Barbie`,
->>>>>>> Stashed changes
+        category = 'NOSTORE',
+        hash = `ll2bb`,
+    },
+    ll3bb = {
+        name = 'Police Buffalo Stx',
+        brand = 'Bravado',
+        model = 'll3bb',
+        price = 500000,
+        category = 'NOSTORE',
+        hash = `ll3bb`,
+    },
+    ll4bb = {
+        name = 'Police Alamo',
+        brand = 'Declasse',
+        model = 'll4bb',
+        price = 500000,
+        category = 'NOSTORE',
+        hash = `ll4bb`,
+    },
+    ll5bb = {
+        name = 'Police Scout',
+        brand = 'Vapid',
+        model = 'll5bb',
+        price = 500000,
+        category = 'NOSTORE',
+        hash = `ll5bb`,
+    },
+    ll6bb = {
+        name = 'Police Terminus',
+        brand = 'Canis',
+        model = 'll6bb',
+        price = 500000,
+        category = 'NOSTORE',
+        hash = `ll6bb`,
+    },
+    ll7bb = {
+        name = 'Police Sandmaster',
+        brand = 'Vapid',
+        model = 'll7bb',
+        price = 500000,
+        category = 'NOSTORE',
+        hash = `ll7bb`,
     },
 
+
+
+
+    -- Ems Vehicles --
+
+    nkstxems = {
+        name = 'Ems Buffalo Stx',
+        brand = 'Bravado',
+        model = 'nkstxems',
+        price = 500000,
+        category = 'NOSTORE',
+        hash = `nkstxems`,
+    },
+    nklandstalker2ems = {
+        name = 'Ems Landstalker',
+        brand = 'Dundreary',
+        model = 'nklandstalker2ems',
+        price = 62744,
+        category = 'NOSTORE',
+        hash = `nklandstalker2ems`,
+    },
+    nkgresleyems = {
+        name = 'Ems Gresley',
+        brand = 'Bravado',
+        model = 'nkgresleyems',
+        price = 63694,
+        category = 'NOSTORE',
+        hash = `nkgresleyems`,
+    },
+    nkgranger2ems = {
+        name = 'Ems Granger',
+        brand = 'Declasse',
+        model = 'nkgranger2ems',
+        price = 60692,
+        category = 'NOSTORE',
+        hash = `nkgranger2ems`,
+    },
+    nkcaracara2ems = {
+        name = 'Ems Caracara',
+        brand = 'Vapid',
+        model = 'nkcaracara2ems',
+        price = 63685,
+        category = 'NOSTORE',
+        hash = `nkcaracara2ems`,
+    },
+    nkballer7ems = {
+        name = 'Ems Baller',
+        brand = 'Gallivanter',
+        model = 'nkballer7ems',
+        price = 65628,
+        category = 'NOSTORE',
+        hash = `nkballer7ems`,
+    },
+    nkambulance = {
+        name = 'Ems Ambulance',
+        brand = 'Vapid',
+        model = 'nkambulance',
+        price = 60692,
+        category = 'NOSTORE',
+        hash = `nkambulance`,
+    },
 }
