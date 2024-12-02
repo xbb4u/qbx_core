@@ -7811,6 +7811,17 @@ return {
         category = 'sports',
         hash = `elegy3`,
     },
+    GODzBMWS1000RR = {
+        name = '1000RR',
+        brand = 'GODZ',
+        model = 'GODzBMWS1000RR',
+        price = 50000,
+        category = 'motorcycles',
+        hash = `GODzBMWS1000RR`,
+    },
+
+}
+
 
 
 
