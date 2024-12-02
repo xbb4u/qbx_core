@@ -7812,7 +7812,7 @@ return {
         hash = `elegy3`,
     },
     GODzBMWS1000RR = {
-        name = 'S1000',
+        name = '1000RR',
         brand = 'GODZ',
         model = 'GODzBMWS1000RR',
         price = 50000,
