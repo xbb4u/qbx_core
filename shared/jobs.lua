@@ -291,4 +291,29 @@ return {
             },
         },
 	},
+    ['burgershot'] = {
+		label = 'Burger Shot',
+        type = 'resturaunt',
+        societyPay = true,
+        basePay = 5000,
+		grades = {
+			[0] = {
+                name = 'New Hire',
+            },
+			[1] = {
+                name = 'Service Rep',
+            },			
+			[2] = {
+                name = 'Cook',
+            },
+			[3] = {
+                name = 'Manager',
+				ismanager = true,
+            },
+			[4] = {
+                name = 'Boss',
+				isboss = true,
+            },
+		},
+	},
 }
