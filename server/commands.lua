@@ -157,11 +157,8 @@ lib.addCommand('car', {
         warp = true,
     })
 
-    -- local plate = qbx.getVehiclePlate(vehicle)
-    -- config.giveVehicleKeys(source, plate, vehicle)
-
-    Entity(vehicle).state:set('ignitionkey', true, true)
-
+    local plate = qbx.getVehiclePlate(vehicle)
+    config.giveVehicleKeys(source, plate, vehicle)
 end)
 
 lib.addCommand('dv', {
