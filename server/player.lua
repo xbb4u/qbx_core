@@ -642,7 +642,11 @@ function CheckPlayerData(source, playerData)
     }
 
 
- --license
+    --afflictions
+    playerData.metadata.diseases = playerData.metadata.diseases or {}
+    playerData.metadata.diseases.addiction = playerData.metadata.diseases.addiction or 0
+
+    --license
     playerData.metadata.licenses = playerData.metadata.licenses or {}
     playerData.metadata.licenses.business  = playerData.metadata.licenses.business or false
 
@@ -810,6 +814,79 @@ function CreatePlayer(playerData, Offline)
         ---@diagnostic disable-next-line: param-type-mismatch
         UpdatePlayerData(self.Offline and self.PlayerData.citizenid or self.PlayerData.source)
     end
+
+    function self.Functions.AddDisease(type, amount)
+        if not amount or not self.PlayerData.metadata['diseases'][type] then return end
+    
+        amount = tonumber(amount)
+        if amount <= 0 then return end
+    
+        self.PlayerData.metadata['diseases'][type] = self.PlayerData.metadata['diseases'][type] + amount
+        if self.PlayerData.metadata['diseases'][type] > 1000 then
+            self.PlayerData.metadata['diseases'][type] = 1000
+        end
+    
+        UpdatePlayerData(self.PlayerData.source)
+    end
+    
+    function self.Functions.RemoveDisease(type, amount)
+        if not amount or not self.PlayerData.metadata['diseases'][type] then return end
+    
+        amount = tonumber(amount)
+        if amount <= 0 then return end
+    
+        self.PlayerData.metadata['diseases'][type] = self.PlayerData.metadata['diseases'][type] - amount
+        if self.PlayerData.metadata['diseases'][type] < 0 then
+            self.PlayerData.metadata['diseases'][type] = 0
+        end
+    
+        UpdatePlayerData(self.PlayerData.source)
+    end
+    
+    function self.Functions.AddReputation(type, amount)
+        if not amount or not self.PlayerData.metadata['reputation'][type] then return end
+    
+        amount = tonumber(amount)
+        if amount <= 0 then return end
+    
+        self.PlayerData.metadata['reputation'][type] = self.PlayerData.metadata['reputation'][type] + amount
+        if self.PlayerData.metadata['reputation'][type] > 1000 then
+            self.PlayerData.metadata['reputation'][type] = 1000
+        end
+    
+        if not self.Offline then
+            local caption = lib.getReputationLabel(type).. ' Reputation'
+            local text = 'You have gained ' .. amount .. ' reputation for a total of ' .. self.PlayerData.metadata['reputation'][type] .. '!'
+            Notify(self.PlayerData.source, text, 'success', 5000, caption)
+        end
+    
+        UpdatePlayerData(self.PlayerData.source)
+    end
+    
+    function self.Functions.RemoveReputation(type, amount)
+        if not amount or not self.PlayerData.metadata['reputation'][type] then return end
+    
+        amount = tonumber(amount)
+        if amount <= 0 then return end
+    
+        self.PlayerData.metadata['reputation'][type] = self.PlayerData.metadata['reputation'][type] - amount
+        if self.PlayerData.metadata['reputation'][type] < 0 then
+            self.PlayerData.metadata['reputation'][type] = 0
+        end
+    
+        if not self.Offline then
+            local caption = lib.getReputationLabel(type).. ' Reputation'
+            local text = 'You have lost ' .. amount .. ' reputation for a total of ' .. self.PlayerData.metadata['reputation'][type] .. '!'
+            Notify(self.PlayerData.source, text, 'error', 5000, caption )
+        end
+    
+        UpdatePlayerData(self.PlayerData.source)
+    end
+    
+    function self.Functions.GetReputation(type)
+        return self.PlayerData.metadata['reputation'][type]
+    end
+    
 
     ---@param moneytype MoneyType
     ---@param amount number
@@ -1218,6 +1295,9 @@ local function emitMoneyEvents(source, playerMoney, moneyType, amount, actionTyp
         exports.ox_inventory:SetItem(source, oxMoneyType, playerMoney[moneyType])
     end
 end
+
+
+
 
 ---@param identifier Source | string
 ---@param moneyType MoneyType
