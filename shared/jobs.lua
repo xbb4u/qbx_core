@@ -316,4 +316,57 @@ return {
             },
 		},
 	},
+    ['cardealer'] = {
+		label = 'PDM',
+        type = 'dealership',
+        societyPay = true,
+        basePay = 5000,
+		grades = {
+			[0] = {
+                name = 'New Hire',
+            },
+			[1] = {
+                name = 'Service Rep',
+            },			
+			[2] = {
+                name = 'Salesman',
+            },
+			[3] = {
+                name = 'Manager',
+				ismanager = true,
+            },
+			[4] = {
+                name = 'Boss',
+				isboss = true,
+            },
+		},
+	},
+    ['uwucatfe'] = {
+		label = 'UWU Catfe',
+		type = 'resturaunt',
+        societyPay = true,
+        basePay = 5000,
+		grades = {
+            [0] = {
+                name = 'Kitten',
+            },
+			[1] = {
+                name = 'Purrista',
+			},
+            [2] = {
+                name = 'Catfe Lead',
+			},
+            [3] = {
+                name = 'Catfe Claws',
+			},
+			[4] = {
+                name = 'Meownager',
+				ismanager = true,
+			},			
+			[5] = {
+                name = 'Boss',
+				isboss = true,
+            },
+        },
+	},
 }
