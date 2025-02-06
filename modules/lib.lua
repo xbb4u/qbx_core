@@ -179,9 +179,15 @@ end
 ---@return string
 function qbx.generateRandomPlate(pattern)
     pattern = pattern or '........'
-    return lib.string.random(pattern):upper()
+    local plate = lib.string.random(pattern):upper()
+    
+    local result = MySQL.Sync.fetchScalar('SELECT plate FROM player_vehicles WHERE plate = ?', {plate})
+    if result then
+        return qbx.generateRandomPlate(pattern)
+    else
+        return plate
+    end
 end
-
 ---Returns the cardinal direction that the given entity is staring towards, or nil if the entity doesn't exist.
 ---```
 ---                 North

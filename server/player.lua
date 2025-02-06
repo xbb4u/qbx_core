@@ -619,6 +619,8 @@ function CheckPlayerData(source, playerData)
     playerData.metadata.armor = playerData.metadata.armor or 0
     playerData.metadata.ishandcuffed = playerData.metadata.ishandcuffed or false
     playerData.metadata.tracker = playerData.metadata.tracker or false
+    playerData.metadata.lifer = playerData.metadata.lifer or false
+
     playerData.metadata.injail = playerData.metadata.injail or 0
     playerData.metadata.jailitems = playerData.metadata.jailitems or {}
     playerData.metadata.status = playerData.metadata.status or {}
