@@ -73,7 +73,7 @@
 ---@class GradeData
 ---@field name string
 ---@field isboss? boolean
----@field ismanager boolean
+---@field ismanager? boolean
 ---@field bankAuth? boolean
 
 ---@class JobGradeData : GradeData
@@ -194,17 +194,19 @@
 ---@class PlayerJob
 ---@field name string
 ---@field label string
--- ---@field payment number
+---@field payment number
 ---@field type? string
 ---@field onduty boolean
 ---@field isboss boolean
 ---@field ismanager boolean
+---@field bankAuth boolean
 ---@field grade {name: string, level: number}
 
 ---@class PlayerGang
 ---@field name string
 ---@field label string
 ---@field isboss boolean
+---@field bankAuth boolean
 ---@field grade {name: string, level: number}
 
 ---@class PlayerSkin

@@ -373,6 +373,23 @@ lib.addCommand('ooc', {
     end
 end)
 
+lib.addCommand('ooc', {
+    help = locale('command.ooc.help'),
+    params = {
+        { name = locale('command.ooc.params.message.name'), help = locale('command.ooc.params.message.help'), type = 'string' }
+    }
+}, function(source, args)
+    args[1] = args[locale('command.ooc.params.message.name')]
+    args[locale('command.ooc.params.message.name')] = nil
+    if #args < 1 then Notify(source, locale('error.missing_args2'), 'error') return end
+    local msg = table.concat(args, ' '):gsub('[~<].-[>~]', '')
+    local playerState = Player(source).state
+    playerState:set('ooc', msg, true)
+
+    -- We have to reset the playerState since the state does not get replicated on StateBagHandler if the value is the same as the previous one --
+    playerState:set('ooc', nil, true)
+end)
+
 lib.addCommand('me', {
     help = locale('command.me.help'),
     params = {
@@ -388,6 +405,40 @@ lib.addCommand('me', {
 
     -- We have to reset the playerState since the state does not get replicated on StateBagHandler if the value is the same as the previous one --
     playerState:set('me', nil, true)
+end)
+
+lib.addCommand('do', {
+    help = locale('command.me.help'),
+    params = {
+        { name = locale('command.do.params.message.name'), help = locale('command.do.params.message.help'), type = 'string' }
+    }
+}, function(source, args)
+    args[1] = args[locale('command.do.params.message.name')]
+    args[locale('command.do.params.message.name')] = nil
+    if #args < 1 then Notify(source, locale('error.missing_args2'), 'error') return end
+    local msg = table.concat(args, ' '):gsub('[~<].-[>~]', '')
+    local playerState = Player(source).state
+    playerState:set('do', msg, true)
+
+    -- We have to reset the playerState since the state does not get replicated on StateBagHandler if the value is the same as the previous one --
+    playerState:set('do', nil, true)
+end)
+
+lib.addCommand('sign', {
+    help = locale('command.sign.help'),
+    params = {
+        { name = locale('command.sign.params.message.name'), help = locale('command.sign.params.message.help'), type = 'string' }
+    }
+}, function(source, args)
+    args[1] = args[locale('command.sign.params.message.name')]
+    args[locale('command.sign.params.message.name')] = nil
+    if #args < 1 then Notify(source, locale('error.missing_args2'), 'error') return end
+    local msg = table.concat(args, ' '):gsub('[~<].-[>~]', '')
+    local playerState = Player(source).state
+    playerState:set('sign', msg, true)
+
+    -- We have to reset the playerState since the state does not get replicated on StateBagHandler if the value is the same as the previous one --
+    playerState:set('sign', nil, true)
 end)
 
 lib.addCommand('id', {help = locale('info.check_id')}, function(source)

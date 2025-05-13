@@ -183,6 +183,9 @@ function SetPlayerPrimaryJob(citizenid, jobName)
         }
     end
 
+    local previousJob = player.PlayerData.job and player.PlayerData.job.name or nil
+
+
     local grade = jobName == 'unemployed' and 0 or player.PlayerData.jobs[jobName]
     if not grade then
         return false, {
@@ -210,6 +213,12 @@ function SetPlayerPrimaryJob(citizenid, jobName)
         UpdatePlayerData(player.PlayerData.source)
         TriggerEvent('QBCore:Server:OnJobUpdate', player.PlayerData.source, player.PlayerData.job)
         TriggerClientEvent('QBCore:Client:OnJobUpdate', player.PlayerData.source, player.PlayerData.job)
+
+        -- Trigger SyncAvailableBusiness event for previous and new jobs
+        if previousJob then
+            TriggerEvent('companies:server:SyncAvailableBusiness', previousJob)
+        end
+        TriggerEvent('companies:server:SyncAvailableBusiness', jobName)
     end
 
     return true
@@ -420,6 +429,7 @@ function SetPlayerPrimaryGang(citizenid, gangName)
         name = gangName,
         label = gang.label,
         isboss = gang.grades[grade].isboss,
+        bankAuth = gang.grades[grade].bankAuth,
         grade = {
             name = gang.grades[grade].name,
             level = grade
@@ -544,6 +554,7 @@ function RemovePlayerFromGang(citizenid, gangName)
             name = 'none',
             label = gang.label,
             isboss = false,
+            bankAuth = false,
             grade = {
                 name = gang.grades[0].name,
                 level = 0
@@ -620,7 +631,6 @@ function CheckPlayerData(source, playerData)
     playerData.metadata.ishandcuffed = playerData.metadata.ishandcuffed or false
     playerData.metadata.tracker = playerData.metadata.tracker or false
     playerData.metadata.lifer = playerData.metadata.lifer or false
-
     playerData.metadata.injail = playerData.metadata.injail or 0
     playerData.metadata.jailitems = playerData.metadata.jailitems or {}
     playerData.metadata.status = playerData.metadata.status or {}
@@ -638,11 +648,6 @@ function CheckPlayerData(source, playerData)
     playerData.metadata.callsign = playerData.metadata.callsign or 'NO CALLSIGN'
     playerData.metadata.fingerprint = playerData.metadata.fingerprint or GenerateUniqueIdentifier('FingerId')
     playerData.metadata.walletid = playerData.metadata.walletid or GenerateUniqueIdentifier('WalletId')
-    playerData.metadata.criminalrecord = playerData.metadata.criminalrecord or {
-        hasRecord = false,
-        date = nil
-    }
-
 
     --afflictions
     playerData.metadata.diseases = playerData.metadata.diseases or {}
@@ -652,6 +657,10 @@ function CheckPlayerData(source, playerData)
     playerData.metadata.licenses = playerData.metadata.licenses or {}
     playerData.metadata.licenses.business  = playerData.metadata.licenses.business or false
 
+    playerData.metadata.criminalrecord = playerData.metadata.criminalrecord or {
+        hasRecord = false,
+        date = nil
+    }
     playerData.metadata.licences = playerData.metadata.licences or {
         id = true,
         driver = true,
@@ -673,6 +682,9 @@ function CheckPlayerData(source, playerData)
     local job = GetJob(playerData.job?.name) or GetJob('unemployed')
     assert(job ~= nil, 'Unemployed job not found. Does it exist in shared/jobs.lua?')
     local jobGrade = GetJob(playerData.job?.name) and playerData.job.grade.level or 0
+    if not job.grades[jobGrade] then
+        jobGrade = 0
+    end
 
     playerData.job = {
         name = playerData.job?.name or 'unemployed',
@@ -682,6 +694,7 @@ function CheckPlayerData(source, playerData)
         onduty = playerData.job?.onduty or false,
         isboss = job.grades[jobGrade].isboss or false,
         ismanager = job.grades[jobGrade].ismanager or false,
+        bankAuth = job.grades[jobGrade].bankAuth or false,
         grade = {
             name = job.grades[jobGrade].name,
             level = jobGrade,
@@ -699,6 +712,7 @@ function CheckPlayerData(source, playerData)
         name = playerData.gang?.name or 'none',
         label = gang.label,
         isboss = gang.grades[gangGrade].isboss or false,
+        bankAuth = gang.grades[gangGrade].bankAuth or false,
         grade = {
             name = gang.grades[gangGrade].name,
             level = gangGrade
@@ -816,79 +830,6 @@ function CreatePlayer(playerData, Offline)
         ---@diagnostic disable-next-line: param-type-mismatch
         UpdatePlayerData(self.Offline and self.PlayerData.citizenid or self.PlayerData.source)
     end
-
-    function self.Functions.AddDisease(type, amount)
-        if not amount or not self.PlayerData.metadata['diseases'][type] then return end
-    
-        amount = tonumber(amount)
-        if amount <= 0 then return end
-    
-        self.PlayerData.metadata['diseases'][type] = self.PlayerData.metadata['diseases'][type] + amount
-        if self.PlayerData.metadata['diseases'][type] > 1000 then
-            self.PlayerData.metadata['diseases'][type] = 1000
-        end
-    
-        UpdatePlayerData(self.PlayerData.source)
-    end
-    
-    function self.Functions.RemoveDisease(type, amount)
-        if not amount or not self.PlayerData.metadata['diseases'][type] then return end
-    
-        amount = tonumber(amount)
-        if amount <= 0 then return end
-    
-        self.PlayerData.metadata['diseases'][type] = self.PlayerData.metadata['diseases'][type] - amount
-        if self.PlayerData.metadata['diseases'][type] < 0 then
-            self.PlayerData.metadata['diseases'][type] = 0
-        end
-    
-        UpdatePlayerData(self.PlayerData.source)
-    end
-    
-    function self.Functions.AddReputation(type, amount)
-        if not amount or not self.PlayerData.metadata['reputation'][type] then return end
-    
-        amount = tonumber(amount)
-        if amount <= 0 then return end
-    
-        self.PlayerData.metadata['reputation'][type] = self.PlayerData.metadata['reputation'][type] + amount
-        if self.PlayerData.metadata['reputation'][type] > 1000 then
-            self.PlayerData.metadata['reputation'][type] = 1000
-        end
-    
-        if not self.Offline then
-            local caption = lib.getReputationLabel(type).. ' Reputation'
-            local text = 'You have gained ' .. amount .. ' reputation for a total of ' .. self.PlayerData.metadata['reputation'][type] .. '!'
-            Notify(self.PlayerData.source, text, 'success', 5000, caption)
-        end
-    
-        UpdatePlayerData(self.PlayerData.source)
-    end
-    
-    function self.Functions.RemoveReputation(type, amount)
-        if not amount or not self.PlayerData.metadata['reputation'][type] then return end
-    
-        amount = tonumber(amount)
-        if amount <= 0 then return end
-    
-        self.PlayerData.metadata['reputation'][type] = self.PlayerData.metadata['reputation'][type] - amount
-        if self.PlayerData.metadata['reputation'][type] < 0 then
-            self.PlayerData.metadata['reputation'][type] = 0
-        end
-    
-        if not self.Offline then
-            local caption = lib.getReputationLabel(type).. ' Reputation'
-            local text = 'You have lost ' .. amount .. ' reputation for a total of ' .. self.PlayerData.metadata['reputation'][type] .. '!'
-            Notify(self.PlayerData.source, text, 'error', 5000, caption )
-        end
-    
-        UpdatePlayerData(self.PlayerData.source)
-    end
-    
-    function self.Functions.GetReputation(type)
-        return self.PlayerData.metadata['reputation'][type]
-    end
-    
 
     ---@param moneytype MoneyType
     ---@param amount number
@@ -1024,6 +965,7 @@ function CreatePlayer(playerData, Offline)
                 label = 'Civilian',
                 isboss = false,
                 ismanager = false,
+                bankAuth = false,
                 onduty = true,
                 payment = 10,
                 grade = {
@@ -1042,7 +984,7 @@ function CreatePlayer(playerData, Offline)
                 self.PlayerData.job.payment = jobGrade.payment or 30
                 self.PlayerData.job.isboss = jobGrade.isboss or false
                 self.PlayerData.job.ismanager = jobGrade.ismanager or false
-
+                self.PlayerData.job.bankAuth = jobGrade.bankAuth or false
             else
                 self.PlayerData.job.grade = {
                     name = 'No Grades',
@@ -1069,6 +1011,7 @@ function CreatePlayer(playerData, Offline)
                 name = 'none',
                 label = 'No Gang Affiliation',
                 isboss = false,
+                bankAuth = false,
                 grade = {
                     name = 'none',
                     level = 0
@@ -1080,13 +1023,16 @@ function CreatePlayer(playerData, Offline)
             local gangGrade = gang.grades[self.PlayerData.gang.grade.level]
 
             if gangGrade then
+                self.PlayerData.gang.grade.name = gangGrade.name
                 self.PlayerData.gang.isboss = gangGrade.isboss or false
+                self.PlayerData.gang.bankAuth = gangGrade.bankAuth or false
             else
                 self.PlayerData.gang.grade = {
                     name = 'No Grades',
                     level = 0,
                 }
                 self.PlayerData.gang.isboss = false
+                self.PlayerData.gang.bankAuth = false
             end
         end
 
@@ -1185,6 +1131,8 @@ function SetPlayerData(identifier, key, value)
     UpdatePlayerData(identifier)
 end
 
+exports('SetPlayerData', SetPlayerData)
+
 ---@param identifier Source | string
 function UpdatePlayerData(identifier)
     local player = type(identifier) == 'string' and (GetPlayerByCitizenId(identifier) or GetOfflinePlayer(identifier)) or GetPlayer(identifier)
@@ -1194,6 +1142,8 @@ function UpdatePlayerData(identifier)
     TriggerEvent('QBCore:Player:SetPlayerData', player.PlayerData)
     TriggerClientEvent('QBCore:Player:SetPlayerData', player.PlayerData.source, player.PlayerData)
 end
+
+exports('UpdatePlayerData', UpdatePlayerData)
 
 ---@param identifier Source | string
 ---@param metadata string
@@ -1205,9 +1155,25 @@ function SetMetadata(identifier, metadata, value)
 
     if not player then return end
 
-    local oldValue = player.PlayerData.metadata[metadata]
+    local oldValue
 
-    player.PlayerData.metadata[metadata] = value
+    if metadata:match('%.') then
+        local metaTable, metaKey = metadata:match('([^%.]+)%.(.+)')
+
+        if metaKey:match('%.') then
+            lib.print.error('cannot get nested metadata more than 1 level deep')
+        end
+
+        oldValue = player.PlayerData.metadata[metaTable]
+
+        player.PlayerData.metadata[metaTable][metaKey] = value
+
+        metadata = metaTable
+    else
+        oldValue = player.PlayerData.metadata[metadata]
+
+        player.PlayerData.metadata[metadata] = value
+    end
 
     UpdatePlayerData(identifier)
 
@@ -1251,7 +1217,17 @@ function GetMetadata(identifier, metadata)
 
     if not player then return end
 
-    return player.PlayerData.metadata[metadata]
+    if metadata:match('%.') then
+        local metaTable, metaKey = metadata:match('([^%.]+)%.(.+)')
+
+        if metaKey:match('%.') then
+            lib.print.error('cannot get nested metadata more than 1 level deep')
+        end
+
+        return player.PlayerData.metadata[metaTable][metaKey]
+    else
+        return player.PlayerData.metadata[metadata]
+    end
 end
 
 exports('GetMetadata', GetMetadata)
@@ -1300,9 +1276,6 @@ local function emitMoneyEvents(source, playerMoney, moneyType, amount, actionTyp
         exports.ox_inventory:SetItem(source, oxMoneyType, playerMoney[moneyType])
     end
 end
-
-
-
 
 ---@param identifier Source | string
 ---@param moneyType MoneyType

@@ -6,6 +6,86 @@ qbx.math = {}
 qbx.table = {}
 qbx.array = {}
 
+qbx.backEngineVehicles = {
+    ['ninef'] = true,
+    ['tenf'] = true,
+    ['tenf2'] = true,
+    ['adder'] = true,
+    ['vagner'] = true,
+    ['t20'] = true,
+    ['infernus'] = true,
+    ['zentorno'] = true,
+    ['reaper'] = true,
+    ['comet2'] = true,
+    ['comet3'] = true,
+    ['jester'] = true,
+    ['jester2'] = true,
+    ['cheetah'] = true,
+    ['cheetah2'] = true,
+    ['prototipo'] = true,
+    ['turismor'] = true,
+    ['turismo3'] = true,
+    ['pfister811'] = true,
+    ['ardent'] = true,
+    ['nero'] = true,
+    ['nero2'] = true,
+    ['tempesta'] = true,
+    ['vacca'] = true,
+    ['bullet'] = true,
+    ['osiris'] = true,
+    ['entityxf'] = true,
+    ['turismo2'] = true,
+    ['fmj'] = true,
+    ['re7b'] = true,
+    ['tyrus'] = true,
+    ['penetrator'] = true,
+    ['monroe'] = true,
+    ['ninef2'] = true,
+    ['stingergt'] = true,
+    ['surfer'] = true,
+    ['surfer2'] = true,
+    ['bifta'] = true,
+    ['outlaw'] = true,
+    ['polcoq4'] = true,
+    ['nerops'] = true,
+    ['gstt202'] = true,
+}
+
+qbx.electricVehicles = {
+    ['neon'] = true,
+    ['voltic'] = true,
+    ['cyclone'] = true,
+    ['raiden'] = true,
+    ['tezeract'] = true,
+    ['dilettante'] = true,
+    ['imorgon'] = true,
+    ['surge'] = true,
+    ['khamelion'] = true,
+    ['khamel'] = true,
+    ['omnisegt'] = true,
+    ['eva'] = true,
+    ['powersurge'] = true,
+    ['virtue'] = true,
+    ['iwagen'] = true,
+    ['savanna'] = true,
+    ['taranis'] = true,
+    ['beretta'] = true,
+    ['buffalo5'] = true,
+    ['vivanite'] = true,
+    ['pbbejv'] = true,
+    ['airtug'] = true,
+    ['caddy'] = true,
+    ['caddy2'] = true,
+    ['caddy3'] = true,
+    ['coureur'] = true,
+    ['cyclone2'] = true,
+    ['inductor'] = true,
+    ['metrotrain'] = true,
+    ['minitank'] = true,
+    ['rcbandito'] = true,
+    ['voltic2'] = true
+}
+
 qbx.armsWithoutGloves = lib.table.freeze({
     male = lib.table.freeze({
         [0] = true,
@@ -88,6 +168,37 @@ qbx.armsWithoutGloves = lib.table.freeze({
         [165] = true
     }),
 })
+
+
+qbx.duffelbagIndexes = lib.table.freeze({
+    male = lib.table.freeze({
+        [40] = true,
+        [41] = true,
+        [44] = true,
+        [45] = true,
+        [81] = true,
+        [82] = true,
+        [85] = true,
+        [86] = true,
+        [130] = true,
+        [131] = true,
+        [132] = true
+    }),
+    female = lib.table.freeze({
+        [40] = true,
+        [41] = true,
+        [44] = true,
+        [45] = true,
+        [81] = true,
+        [82] = true,
+        [85] = true,
+        [86] = true,
+        [131] = true,
+        [132] = true,
+        [133] = true
+    })
+})
+
 
 ---Returns the given string with its trailing whitespaces removed.
 ---@param str string
@@ -179,15 +290,9 @@ end
 ---@return string
 function qbx.generateRandomPlate(pattern)
     pattern = pattern or '........'
-    local plate = lib.string.random(pattern):upper()
-    
-    local result = MySQL.Sync.fetchScalar('SELECT plate FROM player_vehicles WHERE plate = ?', {plate})
-    if result then
-        return qbx.generateRandomPlate(pattern)
-    else
-        return plate
-    end
+    return lib.string.random(pattern):upper()
 end
+
 ---Returns the cardinal direction that the given entity is staring towards, or nil if the entity doesn't exist.
 ---```
 ---                 North
@@ -271,8 +376,11 @@ if isServer then
             coords = vec4(pedCoords.x, pedCoords.y, pedCoords.z, GetEntityHeading(source))
         end
 
-        local vehicleType = exports.qbx_core:GetVehiclesByHash(model).type
+        local vehicleType = exports.qbx_core:GetVehiclesByHash(joaat(model)).type
         if not vehicleType then
+            warn(('No vehicle type found for model: %s temp vehicle was created and taken in type'):format(
+                model))
+
             local tempVehicle = CreateVehicle(model, 0, 0, -200, 0, true, true)
             while not DoesEntityExist(tempVehicle) do Wait(0) end
 
@@ -407,8 +515,8 @@ else
         local text = params.text
         local coords = params.coords
         local scale = (isScaleparamANumber and vec2(params.scale, params.scale))
-                  or params.scale
-                  or vec2(0.35, 0.35)
+        or params.scale
+        or vec2(0.35, 0.35)
         local font = params.font or 4
         local color = params.color or vec4(255, 255, 255, 255)
         local enableDropShadow = params.enableDropShadow or false
@@ -555,6 +663,22 @@ else
         end
     end
 
+    ---@param vehicle integer
+    function qbx.isVehicleBackEngine(vehicle)
+        local model = GetEntityModel(vehicle)
+        if not model then return false end
+        local vehicleName = GetDisplayNameFromVehicleModel(model):lower()
+        return qbx.backEngineVehicles[vehicleName] == true
+    end
+
+    ---@param vehicle integer
+    function qbx.isVehicleElectric(vehicle)
+        local model = GetEntityModel(vehicle)
+        if not model then return false end
+        local vehicleName = GetDisplayNameFromVehicleModel(model):lower()
+        return qbx.electricVehicles[vehicleName] == true
+    end
+
     ---Returns if the local ped is wearing gloves.
     ---@return boolean
     function qbx.isWearingGloves()
@@ -562,6 +686,15 @@ else
         local model = GetEntityModel(cache.ped)
         local tble = qbx.armsWithoutGloves[model == `mp_m_freemode_01` and 'male' or 'female']
         return not tble[armIndex]
+    end
+
+    --- Returns if the local ped is wearing a duffel bag.
+    --- @return boolean
+    function qbx.isWearingDuffelbag()
+        local torsoIndex = GetPedDrawableVariation(cache.ped, 5) -- Duffel bags are in component 5
+        local model = GetEntityModel(cache.ped)
+        local tble = qbx.duffelbagIndexes[model == `mp_m_freemode_01` and 'male' or 'female']
+        return tble[torsoIndex] == true
     end
 
     ---Attempts to load an audio bank and returns whether it was successful.
@@ -584,6 +717,7 @@ else
     ---@field audioSource? number | vector3 entity handle or vector3 coords
     ---@field range? number only used if `audioSource` is a vector3 coordinate
 
+    ---@deprecated use mana_audio instead
     ---Plays a sound with the provided audio name and audio ref.
     ---If `returnSoundId` is false or not specified the soundId is released,
     ---otherwise the function returns the soundId without releasing it.

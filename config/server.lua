@@ -1,5 +1,5 @@
 return {
-    updateInterval = 5, -- how often to update player data in minutes
+    updateInterval = 10, -- how often to update player data in minutes
 
     money = {
         ---@alias MoneyType 'cash' | 'bank' | 'crypto'
@@ -12,8 +12,8 @@ return {
     },
 
     player = {
-        hungerRate = 4.2, -- Rate at which hunger goes down.
-        thirstRate = 3.8, -- Rate at which thirst goes down.
+        hungerRate = 2.5, -- Rate at which hunger goes down.
+        thirstRate = 2.1, -- Rate at which thirst goes down.
 
         ---@enum BloodType
         bloodTypes = {
@@ -112,11 +112,11 @@ return {
         return exports['Renewed-Banking']:removeAccountMoney(accountName, payment)
     end,
 
-    -- ---Paycheck function
-    -- ---@param player Player Player object
-    -- ---@param payment number Payment amount
-    -- sendPaycheck = function (player, payment)
-    --     player.Functions.AddMoney('bank', payment)
-    --     Notify(player.PlayerData.source, locale('info.received_paycheck', payment))
-    -- end,
+    ---Paycheck function
+    ---@param player Player Player object
+    ---@param payment number Payment amount
+    sendPaycheck = function (player, payment)
+        player.Functions.AddMoney('bank', payment)
+        Notify(player.PlayerData.source, locale('info.received_paycheck', payment))
+    end,
 }

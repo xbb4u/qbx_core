@@ -2,7 +2,7 @@ return {
     statusIntervalSeconds = 5, -- how often to check hunger/thirst status to remove health if 0.
     loadingModelsTimeout = 30000, -- Waiting time for ox_lib to load the models before throws an error, for low specs pc
 
-    pauseMapText = 'Powered by Nsrp', -- Text shown above the map when ESC is pressed. If left empty 'FiveM' will appear
+    pauseMapText = 'Amity', -- Text shown above the map when ESC is pressed. If left empty 'FiveM' will appear
 
     characters = {
         useExternalCharacters = true, -- Whether you have an external character management resource. (If true, disables the character management inside the core)
@@ -52,29 +52,29 @@ return {
     },
 
     discord = {
-        enabled = true, -- This will enable or disable the built in discord rich presence.
+        enabled = false, -- This will enable or disable the built in discord rich presence.
 
-        appId = '', -- This is the Application ID (Replace this with you own)
+        appId = '1364064855572877406', -- This is the Application ID (Replace this with you own)
 
         largeIcon = { -- To set this up, visit https://forum.cfx.re/t/how-to-updated-discord-rich-presence-custom-image/157686
-            icon = 'logo_name', -- Here you will have to put the image name for the 'large' icon.
-            text = 'This is a large icon with text', -- Here you can add hover text for the 'large' icon.
+            icon = 'amity', -- Here you will have to put the image name for the 'large' icon.
+            text = 'Amity Roleplay', -- Here you can add hover text for the 'large' icon.
         },
 
         smallIcon = {
-            icon = 'logo_name', -- Here you will have to put the image name for the 'small' icon.
-            text = 'This is a small icon with text', -- Here you can add hover text for the 'small' icon.
+            icon = 'amity', -- Here you will have to put the image name for the 'small' icon.
+            text = 'Amity Roleplay', -- Here you can add hover text for the 'large' icon.
         },
 
         firstButton = {
-            text = 'First Button!',
-            link = 'fivem://connect/localhost:30120',
+            text = 'Store',
+            link = 'https://store.amityrp.com/',
         },
 
-        secondButton = {
-            text = 'Second Button!',
-            link = 'fivem://connect/localhost:30120',
-        }
+        -- secondButton = {
+        --     text = 'Store',
+        --     link = 'https://store.amityrp.com/',
+        -- }
     },
 
     --- Only used by QB bridge

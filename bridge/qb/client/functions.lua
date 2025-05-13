@@ -48,13 +48,13 @@ functions.DrawText = function(x, y, width, height, scale, r, g, b, a, text)
 end
 
 ---@deprecated use qbx.drawText3d from modules/lib.lua
-functions.DrawText3D = function(x, y, z, text)
+functions.DrawText3D = function(x, y, z, text, color)
     qbx.drawText3d({
         text = text,
         coords = vec3(x, y, z),
         scale = 0.35,
         font = 4,
-        color = vec4(255, 255, 255, 215)
+        color = color or vec4(255, 255, 255, 215)
     })
 end
 
