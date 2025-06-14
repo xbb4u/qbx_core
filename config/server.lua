@@ -5,7 +5,7 @@ return {
         ---@alias MoneyType 'cash' | 'bank' | 'crypto'
         ---@alias Money {cash: number, bank: number, crypto: number}
         ---@type Money
-        moneyTypes = { cash = 500, bank = 25000, crypto = 0, cosmo = 0 }, -- type = startamount - Add or remove money types for your server (for ex. blackmoney = 0), remember once added it will not be removed from the database!
+        moneyTypes = { cash = 5000, bank = 20000, crypto = 0, cosmo = 0 }, -- type = startamount - Add or remove money types for your server (for ex. blackmoney = 0), remember once added it will not be removed from the database!
         dontAllowMinus = { 'cash', 'crypto', 'cosmo' }, -- Money that is not allowed going in minus
         paycheckTimeout = 10, -- The time in minutes that it will give the paycheck
         paycheckSociety = false -- If true paycheck will come from the society account that the player is employed at
@@ -13,7 +13,7 @@ return {
 
     player = {
         hungerRate = 2.5, -- Rate at which hunger goes down.
-        thirstRate = 2.1, -- Rate at which thirst goes down.
+        thirstRate = 2.5, -- Rate at which thirst goes down.
 
         ---@enum BloodType
         bloodTypes = {

@@ -5,7 +5,7 @@ return {
         label = 'Unemployed',
         type = 'none',
         defaultDuty = false,
-        offDutyPay = false,
+        offDutyPay = true,
         grades = {
             [0] = {
                 name = 'Freelancer',
@@ -50,16 +50,11 @@ return {
 				ismanager = true,
             },
             [7] = {
-                name = 'Deputy Chief',
-                payment = 1700,
-				ismanager = true,
-            },
-            [8] = {
                 name = 'Assistant Chief',
                 payment = 1800,
 				ismanager = true,
             },
-            [9] = {
+            [8] = {
                 name = 'Chief',
                 payment = 2000,
 				isboss = true,
@@ -131,113 +126,27 @@ return {
                 payment = 1100,
             },
             [1] = {
-                name = 'EMT',
-                payment = 1300,
-            },
-            [2] = {
                 name = 'Paramedic',
                 payment = 1350,
             },
-            [3] = {
-                name = 'Nurse',
-                payment = 1400,
-            },
-            [4] = {
+            [2] = {
                 name = 'Doctor',
                 payment = 1450,
             },
-            [5] = {
-                name = 'Surgeon',
-                payment = 1550,
-            },
-            [6] = {
-                name = 'Department Head',
-                payment = 1600,
-            },
-            [7] = {
-                name = 'Chief of Staff',
-                payment = 1650,
-                ismanager = true
-            },
-            [8] = {
+            [3] = {
                 name = 'Deputy Chief',
                 payment = 1700,
                 ismanager = true
             },
-            [9] = {
+            [4] = {
                 name = 'Chief',
-                payment = 1800,
-                isboss = true,
-            },
-            [10] = {
-                name = 'Director',
                 payment = 2000,
                 isboss = true,
             },
         },
     },
-    ['palace'] = {
-        label = 'Palace Nightclub',
-        type = 'bar',
-        defaultDuty = false,
-        offDutyPay = false,
-        grades = {
-            [0] = {
-                name = 'DJ',
-                payment = 1000,
-            },
-            [1] = {
-                name = 'Bartender',
-                payment = 1100,
-            },
-            [2] = {
-                name = 'Bouncer',
-                payment = 1200,
-            },
-            [3] = {
-                name = 'Manager',
-                ismanager = true,
-                payment = 1300,
-            },
-            [4] = {
-                name = 'Owner',
-                isboss = true,
-                payment = 1500,
-            },
-        },
-    },
     ['highnotes'] = {
         label = 'High Notes Dispensary',
-        type = 'dispensary',
-        defaultDuty = false,
-        offDutyPay = false,
-        grades = {
-            [0] = {
-                name = 'Employee',
-                payment = 1000,
-            },
-            [1] = {
-                name = 'Shopkeeper',
-                payment = 1100,
-            },
-            [2] = {
-                name = 'Supervisor',
-                payment = 1200,
-            },
-            [3] = {
-                name = 'Manager',
-                ismanager = true,
-                payment = 1300,
-            },
-            [4] = {
-                name = 'Owner',
-                isboss = true,
-                payment = 1500,
-            },
-        },
-    },
-    ['smokeys'] = {
-        label = 'Smokeys Dispensary',
         type = 'dispensary',
         defaultDuty = false,
         offDutyPay = false,
@@ -300,8 +209,8 @@ return {
             },
         },
     },
-    ['mechanic'] = {
-        label = 'Pier 76 Mechanic',
+    ['bennyslux'] = {
+        label = 'Bennys',
         type = 'mechanic',
         defaultDuty = false,
         offDutyPay = false,
@@ -328,7 +237,7 @@ return {
                 payment = 1300,
             },
             [5] = {
-                name = 'boss',
+                name = 'Boss',
                 isboss = true,
                 payment = 1500,
             },
@@ -414,6 +323,36 @@ return {
             },
             [2] = {
                 name = 'Business Sales',
+                payment = 1200,
+            },
+            [3] = {
+                name = 'Manager',
+                ismanager = true,
+                payment = 1300,
+            },
+            [4] = {
+                name = 'CEO',
+                isboss = true,
+                payment = 1500,
+            },
+        },
+    },
+    ['vankhov'] = {
+        label = 'Vankhov Jewerly',
+        type = 'jewerly',
+        defaultDuty = false,
+        offDutyPay = false,
+        grades = {
+            [0] = {
+                name = 'Sales Associate',
+                payment = 1000,
+            },
+            [1] = {
+                name = 'Jewerly Consultant',
+                payment = 1100,
+            },
+            [2] = {
+                name = 'Client Advisor',
                 payment = 1200,
             },
             [3] = {
@@ -552,6 +491,40 @@ return {
             },
         },
     },
+    ['beanmachine'] = {
+        label = 'Bean Machine',
+        type = 'resturaunt',
+        defaultDuty = false,
+        offDutyPay = false,
+        grades = {
+            [0] = {
+                name = 'Host',
+                payment = 1000,
+            },
+            [1] = {
+                name = 'Barista',
+                payment = 1100,
+            },
+            [2] = {
+                name = 'Senior Barista',
+                payment = 1150,
+            },
+            [3] = {
+                name = 'Supervisor',
+                payment = 1200,
+            },
+            [4] = {
+                name = 'Manager',
+                ismanager = true,
+                payment = 1300,
+            },
+            [5] = {
+                name = 'Boss',
+                isboss = true,
+                payment = 1500,
+            },
+        },
+    },
     ['stripclub'] = {
         label = 'Vanilla Unicorn',
         type = 'entertainment',
@@ -608,7 +581,7 @@ return {
             },
         },
     },
-    
+
     ['pawnshop2'] = {
         label = 'Pawnshop',
         type = 'pawn',

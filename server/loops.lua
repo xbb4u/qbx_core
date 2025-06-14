@@ -24,7 +24,13 @@ end)
 
 local function pay(player)
     local job = player.PlayerData.job
-    local payment = GetJob(job.name).grades[job.grade.level].payment or job.payment
+    local payment
+    if job.name == 'unemployed' then
+        payment = exports.cityhall:GetUnemploymentBenefit()
+    else
+        payment = GetJob(job.name).grades[job.grade.level].payment or job.payment
+    end
+
     if payment <= 0 then return end
     if not GetJob(job.name).offDutyPay and not job.onduty then return end
     if not config.money.paycheckSociety then
